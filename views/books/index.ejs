@@ -1,0 +1,59 @@
+<% layout('layouts/boilerplate.ejs')%>
+<h1>All Books</h1>
+
+<div class="container">
+  <div id="title" class="center">
+    <h1 id="header" class="text-center mt-5">Book Finder</h1>
+    <div class="row">
+      <div id="input" class="input-group mx-auto col-lg-6 col-md-8 col-sm-12">
+        <input
+          id="search-box"
+          type="text"
+          class="form-control"
+          placeholder="Search Books!..."
+        />
+        <button id="search" class="btn btn-primary" onclick="">Search</button>
+      </div>
+    </div>
+  </div>
+  <div class="book-list">
+    <h2 class="text-center">Search Result</h2>
+    <div id="list-output" class="">
+      <div class="row">
+        <!-- card  -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<a href="/books/new">add new books</a>
+<% for (let book of books){ %>
+<div class="card mb-3">
+  <div class="row">
+    <div class="col-md-4">
+      <% if(book.images.length){ %>
+      <img class="img-fluid" src="<%= book.images[0].url %> " alt="" />
+      <% } else{%>
+      <img
+        class="img-fluid"
+        src="https://res.cloudinary.com/dln90qkqe/image/upload/v1623024213/YelpCamp/yelpcamp-stock.jpg"
+        alt=""
+      />
+
+      <%} %>
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title"><%= book.title %></h5>
+        <p class="card-text"><%= book.desc %></p>
+        <p class="card-text">
+          <small class="text-muted"> <%= book.location %> </small>
+        </p>
+        <a href="/books/<%= book._id %> " class="btn btn-primary"
+          >View <%= book.title %>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<% } %>
