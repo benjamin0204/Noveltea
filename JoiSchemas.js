@@ -27,9 +27,8 @@ const Joi = BaseJoi.extend(extension);
 module.exports.bookSchema = Joi.object({
   book: Joi.object({
     title: Joi.string().required().escapeHTML(),
-    price: Joi.number().required().min(0),
-    location: Joi.string().required().escapeHTML(),
-    desc: Joi.string().required().escapeHTML(),
+    publisher: Joi.string().required().escapeHTML(),
+    author: Joi.string().required().escapeHTML(),
   }).required(),
   deleteImages: Joi.array(),
 });

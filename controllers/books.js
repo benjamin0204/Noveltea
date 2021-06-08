@@ -27,13 +27,6 @@ module.exports.showSingleBook = async (req, res) => {
 module.exports.createNewBook = async (req, res, next) => {
   const book = new Book(req.body.book);
 
-  const geoData = await geocoder
-    .forwardGeocode({
-      query: req.body.book.location,
-      limit: 1,
-    })
-    .send();
-  book.geometry = geoData.body.features[0].geometry;
   book.images = req.files.map((file) => ({
     url: file.path,
     filename: file.filename,
