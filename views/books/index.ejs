@@ -28,20 +28,10 @@
 
 <a href="/books/new">add new books</a>
 <% for (let book of books){ %>
-<div class="card mb-3">
+<div class="card mb-3" style="width: 18rem">
   <div class="row">
-    <div class="col-md-4">
-      <% if(book.images.length){ %>
-      <img class="img-fluid" src="<%= book.images[0].url %> " alt="" />
-      <% } else{%>
-      <img
-        class="img-fluid"
-        src="https://res.cloudinary.com/dln90qkqe/image/upload/v1623024213/YelpCamp/yelpcamp-stock.jpg"
-        alt=""
-      />
-
-      <%} %>
-    </div>
+    <div class="col-md-4"></div>
+    <img src="<%=book.image%>" class="card-img-top" alt="..." />
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title"><%= book.title %></h5>

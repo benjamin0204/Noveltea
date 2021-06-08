@@ -27,10 +27,6 @@ module.exports.showSingleBook = async (req, res) => {
 module.exports.createNewBook = async (req, res, next) => {
   const book = new Book(req.body.book);
 
-  book.images = req.files.map((file) => ({
-    url: file.path,
-    filename: file.filename,
-  }));
   book.author = req.user._id;
   await book.save();
   console.log(book);
