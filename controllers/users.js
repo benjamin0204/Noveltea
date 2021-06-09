@@ -38,3 +38,28 @@ module.exports.logoutUser = (req, res) => {
   req.flash("success", "Goodbye!");
   res.redirect("/books");
 };
+
+module.exports.renderEditUserPage = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.render("users/edit", { user });
+};
+
+module.exports.editUser = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findByIdAndUpdate(id, {
+    ...req.body.book,
+  });
+  await user.save();
+  req.flash("success", "Successfully made an update");
+  res.redirect(`/`);
+};
+
+module.exports.renderShowUsersPage = async (req, res) => {
+  const users = await User.find({});
+  res.render("users/index", { users });
+};
+
+module.exports.renderShowSingleUserPage = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  res.render("users/show", { user });
+};

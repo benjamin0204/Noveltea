@@ -25,6 +25,7 @@ const User = require("./models/user");
 const bookRoutes = require("./routes/books");
 const reviewRoutes = require("./routes/reviews");
 const userRoutes = require("./routes/users");
+const feedRoutes = require("./routes/feed");
 
 // Mongo connection
 const mongoose = require("mongoose");
@@ -168,12 +169,13 @@ app.use((req, res, next) => {
 
 // Using routes
 app.use("/", userRoutes);
+app.use("/feed", feedRoutes);
 app.use("/books", bookRoutes);
 app.use("/books/:id/reviews", reviewRoutes);
 
 // Landing page
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("feed");
 });
 
 // 404 page

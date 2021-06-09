@@ -1,0 +1,28 @@
+<% layout('layouts/boilerplate.ejs')%>
+<div class="row">
+  <h1 class="text-center">EDIT user</h1>
+</div>
+<form
+  action="/users/edit/<%=user._id%>?_method=PUT"
+  method="POST"
+  novalidate
+  class="validated-form"
+  enctype="multipart/form-data"
+>
+  <div class="mb-3">
+    <label class="form-label" for="username">username</label>
+    <input
+      class="form-control"
+      type="text"
+      id="username"
+      name="user[username]"
+      value="<%=user.username %>"
+      required
+    />
+    <div class="valid-feedback">Looks good!</div>
+  </div>
+
+  <div class="mb-3">
+    <button class="btn btn-info">Update User</button>
+  </div>
+</form>

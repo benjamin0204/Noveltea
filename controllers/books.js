@@ -45,7 +45,6 @@ module.exports.renderEditBookForm = async (req, res) => {
 
 module.exports.editBook = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   const book = await Book.findByIdAndUpdate(id, {
     ...req.body.book,
   });
