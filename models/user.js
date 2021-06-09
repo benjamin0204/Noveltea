@@ -8,6 +8,18 @@ const UserSchema = new Schema({
     required: true,
     unique: true,
   },
+  books: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Book",
+    },
+  ],
+  friends: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
 });
 
 UserSchema.plugin(passportLocalMongoose);

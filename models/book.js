@@ -11,10 +11,12 @@ const BookSchema = new Schema(
     price: Number,
     desc: String,
     location: String,
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
+    reader: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     reviews: [
       {
         type: Schema.Types.ObjectId,
