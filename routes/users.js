@@ -6,13 +6,18 @@ const passport = require("passport");
 const { isLoggedIn } = require("../middleware");
 const users = require("../controllers/users");
 
+const multer = require("multer");
+const { storage } = require("../cloudinary");
+const upload = multer({ storage });
+// const upload = multer({ dest: "uploads/" }); // for local image upload
+
 // Prefixed with '/'
 
 // register login
 router
   .route("/register")
   .get(users.renderRegisterForm)
-  .post(catchAsync(users.registerUser));
+  .post(upload.single("image"), catchAsync(users.registerUser));
 
 // login user
 router

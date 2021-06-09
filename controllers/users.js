@@ -1,4 +1,8 @@
+const multer = require("multer");
+
 const User = require("../models/user");
+const { cloudinary } = require("../cloudinary");
+
 module.exports.renderRegisterForm = (req, res) => {
   res.render("users/register");
 };
@@ -6,13 +10,17 @@ module.exports.renderRegisterForm = (req, res) => {
 module.exports.registerUser = async (req, res, next) => {
   try {
     const { email, username, password } = req.body;
-    const newUser = new User({ email, username });
-    const registeredUser = await User.register(newUser, password);
+    const user = new User({ email, username });
+
+    user.image.url = req.file.path;
+    user.image.filename = req.file.filename;
+
+    const registeredUser = await User.register(user, password);
     req.login(registeredUser, (err) => {
       if (err) {
         return next(err);
       }
-      req.flash("success", "welcome to Yelpcamp");
+      req.flash("success", "welcome to NovelTea");
       res.redirect("/books");
     });
   } catch (e) {

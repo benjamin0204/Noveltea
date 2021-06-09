@@ -3,6 +3,7 @@
   <div class="card mb-3 p-3">
     <h5 class="card-title"><%= user.username %></h5>
     <h5 class="card-subtitle"><%= user.email %></h5>
+    <img src="<%= user.image.url%>" class="d-block w-100" alt="" />
     <a href="/user/edit/<%= user._id %>" class="btn btn-info"> edit </a>
   </div>
 </div>
