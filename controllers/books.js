@@ -1,7 +1,6 @@
 const Book = require("../models/book");
-const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
-const mbxtoken = process.env.MAPBOX_TOKEN;
-const geocoder = mbxGeocoding({ accessToken: mbxtoken });
+const User = require("../models/user");
+
 const { cloudinary } = require("../cloudinary");
 
 module.exports.index = async (req, res) => {
@@ -26,10 +25,15 @@ module.exports.showSingleBook = async (req, res) => {
 
 module.exports.createNewBook = async (req, res, next) => {
   const book = new Book(req.body.book);
+  const user = new User(req.user);
 
-  book.author = req.user._id;
+  user.books.push(book);
+
   await book.save();
+  await user.save();
+
   console.log(book);
+  console.log(user);
   req.flash("success", `Successfully submitted a new book: ${book.title}`);
   res.redirect(`/books/${book._id}`);
 };

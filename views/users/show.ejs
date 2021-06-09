@@ -1,9 +1,63 @@
 <% layout('layouts/boilerplate.ejs')%>
-<div class="row">
-  <div class="card mb-3 p-3">
-    <h5 class="card-title"><%= user.username %></h5>
-    <h5 class="card-subtitle"><%= user.email %></h5>
-    <img src="<%= user.image.url%>" class="d-block w-100" alt="" />
-    <a href="/user/edit/<%= user._id %>" class="btn btn-info"> edit </a>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="card" style="width: 18rem">
+          <img
+            src="
+          <%= user.image.url 
+          ? user.image.url 
+          : '/images/default_profile_image.jpg'%>"
+            class="card-img-top"
+            alt="..."
+          />
+          <div class="card-body">
+            <h5 class="card-title"><%= user.username %></h5>
+            <a href="/user/edit/<%= user._id %>" class="btn btn-info"> edit </a>
+          </div>
+        </div>
+      </div>
+      <%for (let book of user.books){ %>
+      <div class="card" style="width: 18rem">
+        <img
+          src="
+          <%= book.image
+          ? book.image 
+          : '/images/default_profile_image.jpg'%>"
+          class="card-img-top"
+          alt="..."
+        />
+        <div class="card-body">
+          <h5 class="card-title"><%= book.title %></h5>
+          <a href="/books/<%= book._id %> " class="btn btn-primary"
+            >View <%= book.title %>
+          </a>
+        </div>
+      </div>
+      <% } %>
+    </div>
+
+    <!-- USers -->
+    <div class="col">
+      <!-- for all books -->
+      <% users.forEach(async function(user) { %>
+      <div class="card mb-3 p-3">
+        <img
+          src="
+          <%= user.image.url 
+          ? user.image.url 
+          : '/images/default_profile_image.jpg'%>"
+          class="card-img-top"
+          alt="..."
+        />
+        <a href="/user/<%= user._id %>">
+          <h5 class="card-title"><%= user.username %></h5>
+        </a>
+        <h5 class="card-subtitle"><%= user.email %></h5>
+      </div>
+
+      <% } )%>
+    </div>
   </div>
 </div>

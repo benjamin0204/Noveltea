@@ -1,4 +1,5 @@
 const multer = require("multer");
+const Book = require("../models/book");
 
 const User = require("../models/user");
 const { cloudinary } = require("../cloudinary");
@@ -64,10 +65,13 @@ module.exports.editUser = async (req, res) => {
 
 module.exports.renderShowUsersPage = async (req, res) => {
   const users = await User.find({});
+
   res.render("users/index", { users });
 };
 
 module.exports.renderShowSingleUserPage = async (req, res) => {
-  const user = await User.findById(req.params.id);
-  res.render("users/show", { user });
+  const books = await Book.find({});
+  const user = await User.findById(req.params.id).populate("books");
+  const users = await User.find({});
+  res.render("users/show", { user, users, books });
 };
