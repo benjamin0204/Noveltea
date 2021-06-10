@@ -75,3 +75,12 @@ module.exports.renderShowSingleUserPage = async (req, res) => {
   const users = await User.find({});
   res.render("users/show", { user, users, books });
 };
+
+module.exports.addFriend = async (req, res) => {
+  const newFreind = await User.findById(req.params.friendID);
+  const currentUser = await User.findById(req.params.id);
+
+  currentUser.friends.push(newFreind);
+  await currentUser.save();
+  res.redirect("/feed");
+};

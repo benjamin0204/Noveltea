@@ -45,4 +45,6 @@ router
   .get(catchAsync(users.renderEditUserPage))
   .put(isLoggedIn, catchAsync(users.editUser));
 
+router.route("/user/:id/friend/:friendID").post(users.addFriend);
+
 module.exports = router;

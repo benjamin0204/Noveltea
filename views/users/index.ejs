@@ -1,12 +1,27 @@
 <% layout('layouts/boilerplate.ejs')%>
-<div class="row">
-  <% users.forEach(async function(user) { %>
-  <div class="card mb-3 p-3">
-    <a href="/user/<%= user._id %> "
-      ><h5 class="card-title"><%= user.username %></h5></a
-    >
-    <h5 class="card-subtitle"><%= user.email %></h5>
-  </div>
+<!-- USers -->
+<div class="col">
+  <!-- for all books -->
 
-  <% } )%>
+  <% users.forEach(async function(user) { %>
+  <!--  -->
+  <% if(currentUser && user.email != currentUser.email) { %>
+
+  <!--  -->
+  <div class="card" style="width: 18rem">
+    <img
+      src="
+          <%= user.image.url 
+          ? user.image.url 
+          : '/images/default_profile_image.jpg'%>"
+      class="card-img-top"
+      alt="..."
+    />
+    <div class="card-body">
+      <h5 class="card-title"><%= user.username %></h5>
+      <h5 class="card-subtitle"><%= user.email %></h5>
+      <a href="/user/<%= user._id %>" class="btn btn-primary">View</a>
+    </div>
+  </div>
+  <% } %> <%})%>
 </div>
