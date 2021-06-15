@@ -64,14 +64,16 @@ module.exports.editUser = async (req, res) => {
 };
 
 module.exports.renderShowUsersPage = async (req, res) => {
-  const users = await User.find({});
-
-  res.render("users/index", { users });
+  const users = await User.find({}).populate("friends");
+  const foundUsers = undefined;
+  res.render("users/index", { users, foundUsers });
 };
 
 module.exports.renderShowSingleUserPage = async (req, res) => {
   const books = await Book.find({});
-  const user = await User.findById(req.params.id).populate("books");
+  const user = await User.findById(req.params.id)
+    .populate("books")
+    .populate("friends");
   const users = await User.find({});
   res.render("users/show", { user, users, books });
 };
@@ -82,5 +84,15 @@ module.exports.addFriend = async (req, res) => {
 
   currentUser.friends.push(newFreind);
   await currentUser.save();
-  res.redirect("/feed");
+  res.redirect("/user");
+};
+
+module.exports.searchForUser = async (req, res) => {
+  const users = await User.find({}).populate("friends");
+  const { searchRequest } = req.query;
+  console.log(searchRequest);
+  const foundUsers = await User.find({
+    username: { $regex: searchRequest, $options: "i" },
+  });
+  res.render("users/index", { users, foundUsers });
 };

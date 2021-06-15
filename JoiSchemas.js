@@ -27,9 +27,16 @@ const Joi = BaseJoi.extend(extension);
 module.exports.bookSchema = Joi.object({
   book: Joi.object({
     title: Joi.string().required().escapeHTML(),
-    publisher: Joi.string().required().escapeHTML(),
-    author: Joi.string().required().escapeHTML(),
-    image: Joi.string().required(),
+    sub: Joi.string().escapeHTML().allow(null, ""),
+    publisher: Joi.string().escapeHTML().allow(null, ""),
+    pubDate: Joi.date().allow(null, ""),
+    author: Joi.string().required().escapeHTML().allow(null, ""),
+    image: Joi.string().allow(null, ""),
+    desc: Joi.string().allow(null, ""),
+    bookLink: Joi.string().allow(null, ""),
+    bookIsbn: Joi.string().allow(null, ""),
+    genre: Joi.string().required(),
+    pagecount: Joi.number().allow(null, ""),
   }).required(),
   deleteImages: Joi.array(),
 });

@@ -47,4 +47,7 @@ router
 
 router.route("/user/:id/friend/:friendID").post(users.addFriend);
 
+// Search
+router.route("/users/search").get(users.searchForUser);
+
 module.exports = router;

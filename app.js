@@ -175,7 +175,7 @@ app.use("/books/:id/reviews", reviewRoutes);
 
 // Landing page
 app.get("/", (req, res) => {
-  res.render("feed");
+  res.render("landing");
 });
 
 // 404 page

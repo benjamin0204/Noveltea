@@ -1,40 +1,98 @@
 <% layout('layouts/boilerplate.ejs')%>
 
-<!-- Book reviews/ratings -->
-<!-- for all books -->
-<div class="container">
-  <% books.forEach(async function(book) { %> <%if(book.reviews.length > 0){ %>
-  <div class="row">
-    <div class="col">
-      <div class="card mb-3">
-        <!-- if book has review -->
+<!-- Header -->
+<div class="container col-xxl-8 px-4 py-5">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <img
+        src="/images/LoginInCap.jpg"
+        class="d-block mx-lg-auto img-fluid"
+        alt="Bootstrap Themes"
+        width="700"
+        height="500"
+        loading="lazy"
+      />
+    </div>
+    <div class="col-lg-6">
+      <h1 class="display-5 fw-bold lh-1 mb-3">please join us.</h1>
+      <p class="lead">
+        We are book lovers first. This has been built for people like you.
+      </p>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">
+          Primary
+        </button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4">
+          Default
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Feed -->
+<div class="container col-xxl-16 px-4 py-5">
+  <div class="row flex-lg-row-reverse  g-5 py-5">
+      <h1>Main Feed</h1>
+      <% books.forEach(async function(book) { %> 
         <!--  -->
-        <h5 class="card-title"><%= book.title %></h5>
+      <%if(book.readers.length > 0){ %>
+        <!--  -->
+      <% book.readers.forEach(async function(reader) { %>
+        <div class="card mb-3 p-3">
+          <!-- if book has review -->
+          <h5 class="card-title"><%= reader.username %> has started reading: <%= book.title %> </h5>
+          
+        </div> 
+      <% } )%>
+      <!--  -->
+      <% } %> 
+      <!--  -->
+      <% } )%>
+  </div>
+</div>
 
-        <% book.reviews.forEach(async function(review) { %>
-        <h5 class="card-title"><%= review.author.username %></h5>
+<!-- REcent Reviews -->
+<div class="container col-xxl-16 px-4 py-5">
+  <div class="row flex-lg-row-reverse  g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <h2 class="display-5 fw-bold lh-1 mb-3">Recent reviews</h2>
+
+      <% books.forEach(async function(book) { %> 
+        <!--  -->
+      <%if(book.reviews.length > 0){ %>
+        <!--  -->
+      <% book.reviews.forEach(async function(review) { %>
+      <div class="card mb-3 p-3">
+        <!-- if book has review -->
+        <h5 class="card-title fw-bold"><%= book.title %></h5>
+        <h5 class="card-title"><%= review.writer.username %></h5>
         <h6 class="card-text mb-2"><%= review.body%></h6>
         <p class="starability-result" data-rating="<%= review.rating %>">
           Rated <%= review.rating %> stars
         </p>
 
-        <% } )%>
         <!-- End for all books -->
-        <a href="/books/<%= book._id %> " class="btn btn-primary"
+        <a href="/books/<%= book._id %> " class="btn btn-primary btn-sm"
           >View <%= book.title %>
-        </a>
-      </div>
+          </a>
+          </div>
+          <% } )%>
+          <!--  -->
+      <% } %> 
+      <!--  -->
+      <% } )%>
     </div>
-    <% } %> <% } )%>
 
-    <!-- USers -->
-    <div class="col">
+    <!-- Recent users -->
+    <div class="col-lg-6">
       <!-- for all books -->
+      <h2 class="display-5 fw-bold lh-1 mb-3">Recent users</h2>
       <% users.forEach(async function(user) { %>
+
       <div class="card mb-3 p-3">
         <a href="/user/<%= user._id %> "
-          ><h5 class="card-title"><%= user.username %></h5></a
+          ><h5 class="card-title "><%= user.username %></h5></a
         >
         <h5 class="card-subtitle"><%= user.email %></h5>
       </div>
@@ -42,4 +100,6 @@
       <% } )%>
     </div>
   </div>
+</div>
+</div>
 </div>

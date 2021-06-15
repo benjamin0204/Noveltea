@@ -16,7 +16,7 @@ router
     isLoggedIn,
     upload.array("image"),
     validateBook,
-    catchAsync(books.createNewBook)
+    catchAsync(books.addNewBook)
   );
 
 router.get("/new", isLoggedIn, books.renderNewBookForm);
