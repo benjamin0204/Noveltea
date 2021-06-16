@@ -1,5 +1,6 @@
 const Book = require("../models/book");
 const User = require("../models/user");
+const Feed = require("../models/feed");
 
 const { cloudinary } = require("../cloudinary");
 const { connect } = require("mongoose");
@@ -31,6 +32,7 @@ module.exports.showSingleBook = async (req, res) => {
 };
 
 module.exports.addNewBook = async (req, res, next) => {
+  const feed = new Feed();
   const book = new Book(req.body.book);
   const user = new User(req.user);
   const bookExist = await Book.exists({ title: book.title });
@@ -43,8 +45,13 @@ module.exports.addNewBook = async (req, res, next) => {
     if (!isReading) {
       user.books.push(foundBook._id);
       foundBook.readers.push(user);
+      feed.body.push(
+        `${user.username}Successfully added: ${foundBook.title} to their library`
+      );
+
       await foundBook.save();
       await user.save();
+      await feed.save();
 
       req.flash(
         "success",
@@ -58,6 +65,11 @@ module.exports.addNewBook = async (req, res, next) => {
   } else {
     user.books.push(book);
     book.readers.push(user);
+    feed.body.push(
+      `${user.username} Successfully added: ${book.title} to their library`
+    );
+
+    await feed.save();
     await book.save();
     await user.save();
 
@@ -99,8 +111,42 @@ module.exports.editBook = async (req, res) => {
 };
 
 module.exports.deleteBook = async (req, res) => {
+  const user = new User(req.user);
+  const feed = new Feed();
   const { id } = req.params;
-  await Book.findByIdAndDelete(id);
-  req.flash("success", "Successfully deleted");
-  res.redirect(`/books/`);
+  const foundBook = await Book.find({ _id: id });
+
+  console.log("==========handling new delete request==========");
+
+  foundBook[0].readers.forEach(async function (reader) {
+    // find all readers of the book
+    if (reader._id.toString() === user._id.toString()) {
+      // check if reader is current user
+      user.books.forEach(async function (book) {
+        // find all books user is reading
+        if (book.toString() === foundBook[0]._id.toString()) {
+          // check if book is found book
+          // remove book from users array
+          let bookIndex = user.books.indexOf(book._id);
+          user.books.splice(bookIndex, 1);
+          // remove user from book array
+          let userIndex = foundBook[0].readers.indexOf(user._id);
+          foundBook[0].readers.splice(userIndex, 1);
+
+          feed.body.push(
+            `${user.username} removed: ${foundBook[0].title} from their library`
+          );
+
+          await foundBook[0].save();
+          await user.save();
+          await feed.save();
+          if (foundBook[0].readers.length == 0) {
+            await Book.findByIdAndDelete(foundBook[0]._id);
+          }
+          req.flash("success", "Successfully deleted");
+          res.redirect(`/books/`);
+        }
+      });
+    }
+  });
 };

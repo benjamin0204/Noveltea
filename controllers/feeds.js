@@ -1,9 +1,10 @@
 const Book = require("../models/book");
 const User = require("../models/user");
+const Feed = require("../models/feed");
 
 module.exports.renderFeed = async (req, res) => {
   const users = await User.find({}).limit(5).sort({ createdAt: -1 });
-
+  const feedMessages = await Feed.find({});
   const books = await Book.find({})
     .populate({
       path: "readers",
@@ -19,5 +20,5 @@ module.exports.renderFeed = async (req, res) => {
     })
     .limit(3)
     .sort({ createdAt: 1 });
-  res.render("feed", { books, users });
+  res.render("feed", { books, users, feedMessages });
 };

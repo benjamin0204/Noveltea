@@ -34,19 +34,9 @@
 <div class="container col-xxl-16 px-4 py-5">
   <div class="row flex-lg-row-reverse  g-5 py-5">
       <h1>Main Feed</h1>
-      <% books.forEach(async function(book) { %> 
+      <% feedMessages.forEach(async function(message) { %> 
         <!--  -->
-      <%if(book.readers.length > 0){ %>
-        <!--  -->
-      <% book.readers.forEach(async function(reader) { %>
-        <div class="card mb-3 p-3">
-          <!-- if book has review -->
-          <h5 class="card-title"><%= reader.username %> has started reading: <%= book.title %> </h5>
-          
-        </div> 
-      <% } )%>
-      <!--  -->
-      <% } %> 
+   <p><%= message.body %> </p>
       <!--  -->
       <% } )%>
   </div>

@@ -31,13 +31,8 @@ router
     validateBook,
     catchAsync(books.editBook)
   )
-  .delete(isLoggedIn, isAuthor, catchAsync(books.deleteBook));
+  .delete(isLoggedIn, catchAsync(books.deleteBook));
 
-router.get(
-  "/:id/edit",
-  isLoggedIn,
-  isAuthor,
-  catchAsync(books.renderEditBookForm)
-);
+router.get("/:id/edit", isLoggedIn, catchAsync(books.renderEditBookForm));
 
 module.exports = router;
