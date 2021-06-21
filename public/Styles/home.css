@@ -1,0 +1,77 @@
+@font-face {
+    font-family: coreCircus;
+    src: url('/CoreCircus.otf');
+}
+
+@font-face {
+    font-family: sofiapro;
+    src: url('/sofiapro-light.otf');
+}
+
+:root {
+    --col-primary: #0C1938;
+    --col-secondary: #96C5D8;
+}
+
+body {
+    background-image: url("/images/landing-background.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+main {
+    text-align: left;
+    color: var(--col-primary)
+}
+
+.landing {
+    padding: 8rem;
+}
+
+.landing--logo {
+    width: 600px;
+    margin-bottom: 9rem;
+}
+
+.landing--header {
+    font-family: coreCircus;
+    font-size: 40;
+    letter-spacing: 2pt;
+    text-transform: uppercase;
+}
+
+.landing--sub {
+    font-family: sofiapro, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25;
+    line-height: 25pt;
+    letter-spacing: 3pt;
+    margin-bottom: 6rem;
+}
+
+.landing--btn {
+    text-decoration: none;
+    color: var(--col-primary);
+    border: none;
+    background-color: var(--col-secondary);
+    font-family: coreCircus;
+    font-size: 25;
+    line-height: 55pt;
+    width: 275px;
+    border-radius: 40px;
+    padding: 20px;
+    transition: all .2s;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    text-transform: uppercase;
+}
+
+.landing--btn:visited {
+    color: var(--col-primary);
+}
+
+.landing--btn:hover {
+    background-color: var( --col-primary);
+    color: var(--col-secondary);
+}
