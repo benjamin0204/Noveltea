@@ -1,0 +1,142 @@
+@font-face {
+    font-family: coreCircus;
+    src: url('/CoreCircus.otf');
+}
+
+@font-face {
+    font-family: sofiapro;
+    src: url('/sofiapro-light.otf');
+}
+
+:root {
+    --col-primary: #0C1938;
+    --col-secondary-light-1: #90CDDD;
+    --col-secondary-light-2: #DCF4FA;
+    --col-secondary-light-3: #F5FEFF
+}
+
+.html {
+    /* This defines what 1rem is 1 rem=10px  */
+    font-size: 62.5%;
+}
+
+body {
+    background-color: var(--col-secondary-light-2);
+}
+
+main {
+    text-align: left;
+    color: var(--col-primary)
+}
+
+ul {
+    margin: 1rem !important;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: all .2s;
+}
+
+a:hover {
+    color: var(--col-secondary-light-1);
+    text-decoration: underline;
+    text-decoration-thickness: .5rem;
+    text-underline-position: under;
+}
+
+/* Feed Navbar Styles */
+
+.feed-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--col-secondary-light-3);
+    color: var(--col-primary);
+    padding: 1rem;
+    position: relative;
+}
+
+.feed-navbar--main {
+    display: flex;
+    align-items: center;
+}
+
+.feed-navbar--item {
+    font-family: coreCircus;
+    /* 22 */
+    font-size: 1.5rem;
+    text-transform: uppercase;
+}
+
+.feed-navbar--item:last-of-type {
+    margin-right: 2rem;
+}
+
+.feed-navbar--dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--col-secondary-light-2);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    padding-left: 0;
+}
+
+.feed-navbar--dropdown:hover .feed-navbar--dropdown-content {
+    display: block;
+}
+
+.feed-navbar--logo {
+    width: 500px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 75%);
+}
+
+.feed-navbar--profile {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Feed Header Styles */
+
+.feed {
+    padding: 8rem;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    flex-flow: row nowrap;
+}
+
+.feed--content {}
+
+.feed--header {
+    margin-top: 9rem;
+    font-family: coreCircus;
+    font-size: 40;
+    letter-spacing: 2pt;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+}
+
+.feed--sub {
+    font-family: sofiapro, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25;
+    line-height: 25pt;
+    letter-spacing: 3pt;
+    margin-bottom: 6rem;
+}
+
+.feed--image-container {}
+
+.feed--image {
+    margin: auto;
+    width: 100%;
+    max-width: 500px;
+    max-height: 100%;
+    margin-right: 5rem;
+}

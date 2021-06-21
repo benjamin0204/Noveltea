@@ -11,7 +11,7 @@ const upload = multer({ storage });
 
 router
   .route("/")
-  .get(catchAsync(books.index))
+  .get(isLoggedIn, catchAsync(books.index))
   .post(
     isLoggedIn,
     upload.array("image"),
@@ -23,7 +23,7 @@ router.get("/new", isLoggedIn, books.renderNewBookForm);
 
 router
   .route("/:id")
-  .get(catchAsync(books.showSingleBook))
+  .get(isLoggedIn, catchAsync(books.showSingleBook))
   .put(
     isLoggedIn,
     isAuthor,

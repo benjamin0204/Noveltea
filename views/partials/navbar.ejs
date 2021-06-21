@@ -1,45 +1,38 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/feed">NovelTea</a>
+<nav class="navbar">
+  <div class="navbar--main">
+    <img class="navbar--logo" src="/images/Logo.png" />
 
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarTogglerDemo02"
-      aria-controls="navbarTogglerDemo02"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="/feed">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/books">My Library</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/books/new">New Book</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/user/">friends</a>
-        </li>
-      </ul>
-      <% if(!currentUser){ %>
-      <a href="/login" class="btn btn-outline-success me-4">Login</a>
-      <a href="/register" class="btn btn-outline-info me-4">Register</a>
-      <% } else { %>
-      <li class="nav-item">
-        <a href="/user/<%= currentUser._id %> " class="navbar-text me-4">
-          <%= currentUser.username %>
-        </a>
-      </li>
+    <ul class="navbar--item">
+      <a href="/feed">home</a>
+    </ul>
+    <ul class="navbar--item navbar--dropdown">
+      <a href="/feed">search</a>
+      <div class="navbar--dropdown-content">
+        <ul class="navbar--item">
+          <a href="/books/new">Books</a>
+        </ul>
+        <ul class="navbar--item">
+          <a href="/user">friends</a>
+        </ul>
+      </div>
+    </ul>
 
-      <a href="/logout" class="btn btn-outline-danger me-4">Logout</a>
-      <% } %>
-    </div>
+    <% if(!currentUser){ %>
+
+    <ul class="navbar--item">
+      <a href="/login">Login</a>
+    </ul>
+    <ul class="navbar--item">
+      <a href="/register">Register</a>
+    </ul>
+    <% } else { %>
+
+    <ul class="navbar--item">
+      <a href="/user/<%= currentUser._id %> ">profile</a>
+    </ul>
+    <ul class="navbar--item">
+      <a href="/logout">logout</a>
+    </ul>
+    <% } %>
   </div>
 </nav>

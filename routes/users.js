@@ -35,17 +35,19 @@ router
 router.get("/logout", isLoggedIn, users.logoutUser);
 
 // Show all users
-router.route("/user/").get(catchAsync(users.renderShowUsersPage));
+router.route("/user/").get(isLoggedIn, catchAsync(users.renderShowUsersPage));
 
 // Show single users
-router.route("/user/:id").get(catchAsync(users.renderShowSingleUserPage));
+router
+  .route("/user/:id")
+  .get(isLoggedIn, catchAsync(users.renderShowSingleUserPage));
 // edit user
 router
   .route("/user/edit/:id")
-  .get(catchAsync(users.renderEditUserPage))
+  .get(isLoggedIn, catchAsync(users.renderEditUserPage))
   .put(isLoggedIn, catchAsync(users.editUser));
 
-router.route("/user/:id/friend/:friendID").post(users.addFriend);
+router.route("/user/:id/friend/:friendID").post(isLoggedIn, users.addFriend);
 
 // Search
 router.route("/users/search").get(users.searchForUser);
