@@ -1,5 +1,6 @@
 const multer = require("multer");
 const Book = require("../models/book");
+const Notifications = require("../models/notification");
 
 const User = require("../models/user");
 const { cloudinary } = require("../cloudinary");
@@ -21,6 +22,7 @@ module.exports.registerUser = async (req, res, next) => {
       if (err) {
         return next(err);
       }
+
       req.flash("success", "welcome to NovelTea");
       res.redirect("/books");
     });
@@ -70,12 +72,17 @@ module.exports.renderShowUsersPage = async (req, res) => {
 };
 
 module.exports.renderShowSingleUserPage = async (req, res) => {
+  const notifications = await Notifications.find({})
+    .populate("sender")
+    .populate("reciever")
+    .populate("feedMessage");
+
   const books = await Book.find({});
   const user = await User.findById(req.params.id)
     .populate("books")
     .populate("friends");
   const users = await User.find({});
-  res.render("users/show", { user, users, books });
+  res.render("users/show", { user, users, books, notifications });
 };
 
 module.exports.addFriend = async (req, res) => {

@@ -2,7 +2,7 @@
 <div class="page-content page-container" id="page-content">
   <div class="padding">
     <div class="row container d-flex justify-content-center">
-      <div class="col-xl-6 col-md-12">
+      <div class="col-md-12">
         <div class="card user-card-full">
           <div class="row m-l-0 m-r-0">
             <div class="col-sm-4 bg-c-lite-green user-profile">
@@ -59,48 +59,41 @@
       <div class="container col-xxl-16 px-4 py-5">
         <div class="row flex-lg-row-reverse g-5 py-5">
           <div class="col-10 col-sm-8 col-lg-6">
-            <h2 class="display-5 fw-bold lh-1 mb-3">Books</h2>
-            <% for (let book of user.books){ %>
+            <% notifications.forEach(function(notification){%>
+            <!--  -->
+            <% if(notification.reciever.username === currentUser.username){ %>
+            <!--  -->
+            <% if(!notification.read){ %>
 
-            <div class="">
-              <div class="card">
-                <div class="row no-gutters">
-                  <div class="col-md-4">
-                    <img
-                      src="<%= book.image %> "
-                      class="card-img"
-                      alt="<%= book.title %>'s cover image"
-                    />
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-body">
-                      <h5 class="card-title"><%= book.title %></h5>
-                      <p class="card-title">
-                        <%= book.sub.toString() != 'undefined' ? book.sub : ""
-                        %>
-                      </p>
-                      <p class="card-text">Author: <%= book.author %></p>
-                      <p class="card-text">Publisher: <%= book.publisher %></p>
-                      <p class="card-text"><%= book.genre %></p>
-                      <% if(book.bookLink){ %>
-                      <a
-                        href="<%= book.bookLink %> "
-                        target="_blank"
-                        class="btn btn-info"
-                      >
-                        Preview
-                      </a>
-                      <% } %>
-                      <a href="/books/<%= book._id %> " class="btn btn-success"
-                        >View book</a
-                      >
-                    </div>
+            <div class="card">
+              <div class="row no-gutters">
+                <div class="col-md-4">
+                  <img
+                    src="<%=notification.sender.image.url %> "
+                    class="card-img"
+                  />
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <%= notification.sender.username %>
+                    </h5>
+                    <p class="card-title">commented on your update</p>
+                    <p class="card-text">
+                      <%= notification.feedMessage.body %>
+                    </p>
+                    <p class="card-text">comment: <%= notification.body %></p>
+                    <button class="btn btn-info">close</button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <% } %>
+            <%} %>
+            <!--  -->
+            <%} %>
+            <!--  -->
+            <%}) %>
           </div>
 
           <div class="col-lg-6">
@@ -112,10 +105,26 @@
               >
               <h5 class="card-subtitle"><%= friend.email %></h5>
             </div>
-
             <% } )%>
           </div>
         </div>
+      </div>
+
+      <div class="container col-xxl-8 px-4 py-5">
+        <h2 class="display-5 fw-bold lh-1 mb-3">Books</h2>
+        <% for (let book of user.books){ %>
+
+        <div class="row no-gutters float-start">
+          <a href="/books/<%= book._id %> ">
+            <img
+              src="<%= book.image %> "
+              class="card-img"
+              alt="<%= book.title %>'s cover image"
+            />
+          </a>
+        </div>
+
+        <% } %>
       </div>
     </div>
   </div>

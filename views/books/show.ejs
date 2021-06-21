@@ -6,6 +6,10 @@
       <div class="row g-0">
         <div class="col-md-4">
           <img src="<%= book.image %> " alt="<%= book.title %>'s cover' " />
+          <!--  -->
+          <% if (book.readers.findIndex(reader => reader.id ===
+          currentUser._id)){ %>
+
           <form
             class="mt-5 p-3"
             action="/books/<%= book._id %>?_method=DELETE"
@@ -13,6 +17,109 @@
           >
             <button class="btn btn-sm btn-danger">Remove from library</button>
           </form>
+          <%} else{%>
+          <form
+            action="/books"
+            method="POST"
+            class="validated-form mt-5 p-3"
+            novalidate
+            enctype="multipart/form-data"
+          >
+            <input
+              value="<% book.bookImg %>"
+              class="d-none form-control"
+              type="image"
+              id="image"
+              name="book[image]"
+              required
+            />
+
+            <input
+              value="<%= book.title %>"
+              class="d-none form-control"
+              type="text"
+              id="title"
+              name="book[title]"
+              required
+            />
+
+            <input
+              value="<%= book.sub %>"
+              class="d-none form-control"
+              type="text"
+              id="sub"
+              name="book[sub]"
+            />
+
+            <input
+              value="<%= book.author %>"
+              class="d-none form-control"
+              type="text"
+              id="author"
+              name="book[author]"
+              required
+            />
+
+            <input
+              value="<%= book.publisher %>"
+              class="d-none form-control"
+              type="text"
+              id="publisher"
+              name="book[publisher]"
+            />
+            <input
+              value="<%= book.pubDate %>"
+              class="d-none form-control"
+              type="date"
+              id="pubDate"
+              name="book[pubDate]"
+            />
+
+            <input
+              value="<%= book.genre %>"
+              class="d-none form-control"
+              type="text"
+              id="genre"
+              name="book[genre]"
+              required
+            />
+
+            <input
+              value="<%= book.bookImg %>"
+              class="d-none form-control"
+              type="text"
+              id="desc"
+              name="book[desc]"
+            />
+
+            <input
+              value="<%= book.pagecount %>"
+              class="d-none form-control"
+              type="number"
+              id="pageCount"
+              name="book[pagecount]"
+            />
+
+            <input
+              value="<%= book.bookIsbn %>"
+              class="d-none form-control"
+              type="text"
+              id="bookIsbn"
+              name="book[bookIsbn]"
+            />
+            <input
+              value="<%= book.bookLink %>"
+              class="d-none form-control"
+              type="text"
+              id="bookLink"
+              name="book[bookLink]"
+            />
+
+            <button type="submit" class="btn btn-sm btn-primary">
+              Add to library
+            </button>
+          </form>
+          <%}%>
         </div>
 
         <div class="col-md-8">
@@ -39,7 +146,6 @@
   <% if(book.reviews){ %>
   <div class="col-4">
     <!-- REVIEW FORM -->
-
     <% if(currentUser) { %>
     <h2>Leave a review</h2>
     <form

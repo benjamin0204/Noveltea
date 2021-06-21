@@ -33,11 +33,65 @@
 <!-- Feed -->
 <div class="container col-xxl-16 px-4 py-5">
   <div class="row flex-lg-row-reverse  g-5 py-5">
-      <h1>Main Feed</h1>
+
+    <h1>Updates</h1>
+
+    <% currentUser.friends.forEach(async function(friend) { %> 
       <% feedMessages.forEach(async function(message) { %> 
         <!--  -->
-   <p><%= message.body %> </p>
-      <!--  -->
+        <% if(message.reader._id.toString() === friend.toString()){ %> 
+          <div class="card mb-3 p-3">
+            <h5 class="card-title"><%= message.body %></h5>
+            <h6 class="card-text mb-2"><%= message.createdAt.toString().slice(0,11)%> </h6>
+            <ul class="list-group list-group-flush">
+              <%if(message.comments){ %> 
+                <% message.comments.forEach(function(comment){%>
+                  <li class="list-group-item"><%= comment.body %> - <%= comment.author.username %> </li>
+                <%}) %> 
+              <% } %> 
+            </ul>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CommentModal<%= message._id %> ">
+              Add comment
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="CommentModal<%= message._id %>" tabindex="-1" aria-labelledby="CommentModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="CommentModalLabel">Add A Comment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <form 
+                  class="d-flex"
+                  action="/feed/<%= message._id %>/comment"
+                  method="POST"
+                  class="validated-form"
+                  novalidate
+                  >
+                  <div class="modal-body">
+                      <input 
+                      class="form-control me-2"
+                      placeholder="Comment"
+                      type="text"
+                      id="comment"
+                      name="comment"
+                      aria-label="feed[Comment]"
+                      required
+                      autofocus
+                      >
+                    </div>
+                    <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Comment</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% } %> 
+        <!--  -->
+        <% } )%>
       <% } )%>
   </div>
 </div>
@@ -93,3 +147,4 @@
 </div>
 </div>
 </div>
+

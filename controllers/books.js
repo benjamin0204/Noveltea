@@ -35,6 +35,7 @@ module.exports.addNewBook = async (req, res, next) => {
   const feed = new Feed();
   const book = new Book(req.body.book);
   const user = new User(req.user);
+
   const bookExist = await Book.exists({ title: book.title });
 
   if (bookExist === true) {
@@ -48,6 +49,7 @@ module.exports.addNewBook = async (req, res, next) => {
       feed.body.push(
         `${user.username}Successfully added: ${foundBook.title} to their library`
       );
+      feed.reader = user;
 
       await foundBook.save();
       await user.save();
@@ -68,6 +70,7 @@ module.exports.addNewBook = async (req, res, next) => {
     feed.body.push(
       `${user.username} Successfully added: ${book.title} to their library`
     );
+    feed.reader = user;
 
     await feed.save();
     await book.save();
@@ -136,6 +139,8 @@ module.exports.deleteBook = async (req, res) => {
           feed.body.push(
             `${user.username} removed: ${foundBook[0].title} from their library`
           );
+
+          feed.reader = user;
 
           await foundBook[0].save();
           await user.save();
