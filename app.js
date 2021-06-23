@@ -123,6 +123,7 @@ const connectSrcUrls = [
   "https://events.mapbox.com",
   "https://www.googleapis.com",
   "http://books.google.com/books/content",
+  "https://ka-f.fontawesome.com",
 ];
 const fontSrcUrls = [];
 app.use(

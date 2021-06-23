@@ -9,6 +9,7 @@ module.exports.renderFeed = async (req, res) => {
   const feedMessages = await Feed.find({})
     .sort({ createdAt: "desc" })
     .populate("reader")
+    .populate("book")
     .populate({
       path: "comments",
       populate: { path: "author" },

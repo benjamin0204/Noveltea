@@ -8,11 +8,22 @@
     src: url('/sofiapro-light.otf');
 }
 
+@font-face {
+    font-family: sofiaproLight;
+    src: url('/SofiaProLightAz.otf');
+}
+
+@font-face {
+    font-family: sofiaproReg;
+    src: url('/SofiaProRegularAz.otf');
+}
+
 :root {
     --col-primary: #0C1938;
     --col-secondary-light-1: #90CDDD;
     --col-secondary-light-2: #DCF4FA;
-    --col-secondary-light-3: #F5FEFF
+    --col-secondary-light-3: #F5FEFF;
+    --col-secondary-light-4: #BFE4ED;
 }
 
 .html {
@@ -102,7 +113,7 @@ a:hover {
 
 /* Feed Header Styles */
 
-.feed {
+.feed-header {
     padding: 8rem;
     display: flex;
     justify-content: space-between;
@@ -110,33 +121,209 @@ a:hover {
     flex-flow: row nowrap;
 }
 
-.feed--content {}
+.feed-header--content {}
 
-.feed--header {
+.feed-header--header {
     margin-top: 9rem;
     font-family: coreCircus;
-    font-size: 40;
+    font-size: 2.5rem;
     letter-spacing: 2pt;
     text-transform: uppercase;
     margin-bottom: 3rem;
 }
 
-.feed--sub {
+.feed-header--sub {
     font-family: sofiapro, sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-size: 25;
+    font-size: 1.2rem;
     line-height: 25pt;
     letter-spacing: 3pt;
     margin-bottom: 6rem;
 }
 
-.feed--image-container {}
+.feed-header--image-container {}
 
-.feed--image {
+.feed-header--image {
     margin: auto;
     width: 100%;
     max-width: 500px;
     max-height: 100%;
     margin-right: 5rem;
+}
+
+/* Main Feed Styles */
+
+/* 
+--col-secondary-light-1: #90CDDD;
+--col-secondary-light-2: #DCF4FA;
+--col-secondary-light-3: #F5FEFF 
+    --col-secondary-light-4: #BFE4ED;
+
+*/
+
+.main-feed {
+    display: flex;
+    justify-content: space-between;
+    color: inherit;
+    font-family: coreCircus;
+    text-align: center;
+}
+
+.main-feed h3 {
+    padding: 1rem;
+    font-size: 1.25rem;
+    line-height: 25pt;
+    letter-spacing: 3pt;
+    text-transform: uppercase;
+}
+
+.main-feed--left-container {
+    background-color: var(--col-secondary-light-4);
+}
+
+.main-feed--middle-container {
+    width: 50%;
+    background-color: var(--col-secondary-light-3);
+    position: relative;
+    font-family: coreCircus;
+    padding: 3rem;
+    padding-top: 0;
+    padding-left: 4rem;
+}
+
+.main-feed--middle-container h2 {
+    font-family: coreCircus;
+    font-size: 3rem;
+    letter-spacing: 2pt;
+    margin-bottom: 4rem;
+}
+
+.main-feed--middle-container ::before {
+    background-color: var(--col-secondary-light-3);
+    content: "";
+    margin: 0 auto;
+    position: absolute;
+    top: -5rem;
+    right: 0;
+    width: 100%;
+    height: 200px;
+    z-index: -1;
+}
+
+.main-feed--right-container {
+    background-color: var(--col-secondary-light-4);
+}
+
+/* Feed Card Styles */
+
+.feed-card {
+    text-align: left;
+    background-color: var(--col-secondary-light-2);
+    position: relative;
+    padding: 2rem;
+    padding-top: 1.125rem;
+}
+
+.feed-card--profile-image {
+    border-radius: 50%;
+    position: absolute;
+    width: 5rem;
+    left: -2rem;
+    top: -1rem;
+}
+
+.feed-card--text {
+    letter-spacing: 1pt;
+    line-height: 25pt;
+    width: 65%;
+    margin-left: 2rem;
+}
+
+.feed-card--username {
+    font-size: 1.1rem;
+    margin-right: 1rem;
+    display: inline;
+}
+
+.feed-card--update-message {
+    font-size: 1rem;
+    font-family: sofiaproLight, sans-serif;
+}
+
+.feed-card--book-name {
+    font-size: 1rem;
+    font-family: sofiaproReg, sans-serif;
+}
+
+.feed-card--image-container {}
+
+.feed-card--image {
+    height: 10rem;
+    position: absolute;
+    top: -1rem;
+    right: 1rem;
+}
+
+/* Comment Card Styles */
+
+.comment-card {
+    background-color: #fff;
+    border-radius: 5rem;
+    width: 50%;
+    text-align: left;
+    position: relative;
+    padding-top: .6rem;
+    padding-bottom: .3rem;
+    padding-left: 3.5rem;
+    top: -2rem;
+    left: 2rem;
+    margin-bottom: 1rem;
+}
+
+.comment {
+    width: 90%;
+}
+
+.comment-card:last-of-type {
+    margin-bottom: 3rem;
+}
+
+.comment-card--image {
+    border-radius: 50%;
+    height: 100%;
+    position: absolute;
+    left: 0rem;
+    top: 0rem;
+}
+
+.comment-card--username {
+    margin-bottom: 0;
+    font-size: .8rem;
+    letter-spacing: 1.5pt;
+    max-width: 100%;
+    margin-left: .6rem;
+}
+
+.comment-card--comment {
+    margin-left: 1rem;
+    font-size: .8rem;
+    max-width: 100%;
+    font-family: sofiaproReg, sans-serif;
+    border: none;
+}
+
+.comment-card--comment-label {
+    font-size: .6rem;
+    max-width: 100%;
+    font-family: sofiaproReg, sans-serif;
+    border: none;
+    margin-left: 1rem;
+}
+
+.far fa-comment {
+    position: absolute;
+    height: 50%;
+    top: 37.5%;
+    right: 5rem;
 }

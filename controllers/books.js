@@ -46,9 +46,8 @@ module.exports.addNewBook = async (req, res, next) => {
     if (!isReading) {
       user.books.push(foundBook._id);
       foundBook.readers.push(user);
-      feed.body.push(
-        `${user.username}Successfully added: ${foundBook.title} to their library`
-      );
+      feed.body.push("Started reading");
+      feed.book = foundBook;
       feed.reader = user;
 
       await foundBook.save();
@@ -67,9 +66,8 @@ module.exports.addNewBook = async (req, res, next) => {
   } else {
     user.books.push(book);
     book.readers.push(user);
-    feed.body.push(
-      `${user.username} Successfully added: ${book.title} to their library`
-    );
+    feed.body.push("Started reading");
+    feed.book = book;
     feed.reader = user;
 
     await feed.save();
@@ -136,10 +134,8 @@ module.exports.deleteBook = async (req, res) => {
           let userIndex = foundBook[0].readers.indexOf(user._id);
           foundBook[0].readers.splice(userIndex, 1);
 
-          feed.body.push(
-            `${user.username} removed: ${foundBook[0].title} from their library`
-          );
-
+          feed.body.push("removed");
+          feed.book = foundBook[0];
           feed.reader = user;
 
           await foundBook[0].save();

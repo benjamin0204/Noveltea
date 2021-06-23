@@ -1,201 +1,216 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Noveltea</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Noveltea</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="/Styles/feed.css" />
+  </head>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous" />
-  <link rel="stylesheet" href="/Styles/feed.css" />
-</head>
+  <body class="d-flex flex-column vh-100">
+    <main>
+      <!-- Feed NavBar -->
 
-<body class="d-flex flex-column vh-100">
-  <main>
+      <nav class="feed-navbar">
+        <div class="feed-navbar--main">
+          <ul class="feed-navbar--item">
+            <a href="/feed">home</a>
+          </ul>
+          <ul class="feed-navbar--item feed-navbar--dropdown">
+            <a href="/feed">search</a>
+            <div class="feed-navbar--dropdown-content">
+              <ul class="feed-navbar--item">
+                <a href="/books/new">Books</a>
+              </ul>
+              <ul class="feed-navbar--item">
+                <a href="/user">friends</a>
+              </ul>
+            </div>
+          </ul>
+        </div>
+        <img class="feed-navbar--logo" src="/images/Logo.png" />
 
-    <nav class="feed-navbar">
-      <div class="feed-navbar--main">
-        <ul class="feed-navbar--item"><a href="/feed">home</a></ul>
-        <ul class="feed-navbar--item feed-navbar--dropdown">
-          <a href="/feed">search</a>
-          <div class="feed-navbar--dropdown-content">
-            <ul class="feed-navbar--item"><a href="/books/new">Books</a></ul>
-            <ul class="feed-navbar--item"><a href="/user">friends</a></ul>
-          </div>
-        </ul>
-      </div>
-      <img class='feed-navbar--logo' src='/images/Logo.png' />
-
-      <% if(!currentUser){ %>
+        <% if(!currentUser){ %>
 
         <div class="feed-navbar--profile">
-          <ul class="feed-navbar--item"><a href="/login">Login</a></ul>
-          <ul class="feed-navbar--item"><a href="/register">Register</a></ul>
+          <ul class="feed-navbar--item">
+            <a href="/login">Login</a>
+          </ul>
+          <ul class="feed-navbar--item">
+            <a href="/register">Register</a>
+          </ul>
         </div>
         <% } else { %>
 
-          <div class="feed-navbar--profile">
-            <ul class="feed-navbar--item"><a href="/user/<%= currentUser._id %> ">profile</a></ul>
-            <ul class="feed-navbar--item"><a href="/logout">logout</a></ul>
+        <div class="feed-navbar--profile">
+          <ul class="feed-navbar--item">
+            <a href="/user/<%= currentUser._id %> ">profile</a>
+          </ul>
+          <ul class="feed-navbar--item">
+            <a href="/logout">logout</a>
+          </ul>
+        </div>
+        <% } %>
+      </nav>
+
+      <!-- Header -->
+      <div class="feed-header">
+        <div class="feed-header--content">
+          <h1 class="feed-header--header">
+            welcome, <%= currentUser.username %>
+          </h1>
+          <p class="feed-header--sub">
+            Read, review, discuss. Join the <br />
+            conversation and spill some tea.<br />
+            We are all booklovers here.
+          </p>
+        </div>
+        <div class="feed-header--image-container">
+          <img class="feed-header--image" src="/images/feed-main.png" />
+        </div>
+      </div>
+
+      <!-- Main Feed -->
+      <div class="main-feed">
+
+        <!-- Left container -->
+        <div class="main-feed--left-container">
+          <h3>Recommended for you</h3>
+          <div class="main-feed--left-image-container">
+            <img
+              class="main-feed--left-image-container"
+              src="/images/WOK.jpg"
+            ></img>
           </div>
-          <% } %>
-    </nav>
+        </div>
 
-
-    <!-- Header -->
-    <div class="feed">
-      <div class="feed--content">
-        <h1 class="feed--header">
-          welcome, <%= currentUser.username %>
-        </h1>
-        <p class="feed--sub">
-          Read, review, discuss. Join the <br>
-          conversation and spill some tea.<br>
-          We are all booklovers here. </p>
-      </div>
-      <div class="feed--image-container">
-        <img class='feed--image' src='/images/feed-main.png' />
-      </div>
-    </div>
-
-    <!-- Feed -->
-    <div class="container col-xxl-16 px-4 py-5">
-      <div class="row flex-lg-row-reverse  g-5 py-5">
-
-        <h1>Updates</h1>
-
-        <% currentUser.friends.forEach(async function(friend) { %>
-          <% feedMessages.forEach(async function(message) { %>
+        <div class="main-feed--middle-container">
+          <h2>News feed</h2>
+          <% currentUser.friends.forEach(async function(friend) { %>
+            <!--  -->
+            <% feedMessages.forEach(async function(message) { %>
             <!--  -->
             <% if(message.reader._id.toString()===friend.toString()){ %>
-              <div class="card mb-3 p-3">
-                <h5 class="card-title">
-                  <%= message.body %>
-                </h5>
-                <h6 class="card-text mb-2">
-                  <%= message.createdAt.toString().slice(0,11)%>
-                </h6>
-                <ul class="list-group list-group-flush">
-                  <%if(message.comments){ %>
-                    <% message.comments.forEach(function(comment){%>
-                      <li class="list-group-item">
-                        <%= comment.body %> - <%= comment.author.username %>
-                      </li>
-                      <%}) %>
-                        <% } %>
-                </ul>
-
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                  data-bs-target="#CommentModal<%= message._id %> ">
-                  Add comment
-                </button>
-                <!-- Modal -->
-                <div class="modal fade" id="CommentModal<%= message._id %>" tabindex="-1"
-                  aria-labelledby="CommentModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="CommentModalLabel">Add A Comment</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <form class="d-flex" action="/feed/<%= message._id %>/comment" method="POST"
-                        class="validated-form" novalidate>
-                        <div class="modal-body">
-                          <input class="form-control me-2" placeholder="Comment" type="text" id="comment" name="comment"
-                            aria-label="feed[Comment]" required autofocus>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="submit" class="btn btn-primary">Comment</button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% } %>
-                <!--  -->
-                <% } )%>
-                  <% } )%>
-      </div>
-    </div>
-
-    <!-- REcent Reviews -->
-    <div class="container col-xxl-16 px-4 py-5">
-      <div class="row flex-lg-row-reverse  g-5 py-5">
-        <div class="col-10 col-sm-8 col-lg-6">
-          <h2 class="display-5 fw-bold lh-1 mb-3">Recent reviews</h2>
-
-          <% books.forEach(async function(book) { %>
             <!--  -->
-            <%if(book.reviews.length> 0){ %>
-              <!--  -->
-              <% book.reviews.forEach(async function(review) { %>
-                <div class="card mb-3 p-3">
-                  <!-- if book has review -->
-                  <h5 class="card-title fw-bold">
-                    <%= book.title %>
-                  </h5>
-                  <h5 class="card-title">
-                    <%= review.writer.username %>
-                  </h5>
-                  <h6 class="card-text mb-2">
-                    <%= review.body%>
-                  </h6>
-                  <p class="starability-result" data-rating="<%= review.rating %>">
-                    Rated <%= review.rating %> stars
-                  </p>
-
-                  <!-- End for all books -->
-                  <a href="/books/<%= book._id %> " class="btn btn-primary btn-sm">View <%= book.title %>
-                  </a>
-                </div>
-                <% } )%>
-                  <!--  -->
-                  <% } %>
-                    <!--  -->
-                    <% } )%>
-        </div>
-
-        <!-- Recent users -->
-        <div class="col-lg-6">
-          <!-- for all books -->
-          <h2 class="display-5 fw-bold lh-1 mb-3">Recent users</h2>
-          <% users.forEach(async function(user) { %>
-
-            <div class="card mb-3 p-3">
-              <a href="/user/<%= user._id %> ">
-                <h5 class="card-title ">
-                  <%= user.username %>
-                </h5>
-              </a>
-              <h5 class="card-subtitle">
-                <%= user.email %>
-              </h5>
+          <div class="feed-card">
+            <img
+            src="<%= message.reader.image.url %> "
+            alt=""
+            class="feed-card--profile-image"
+          />
+            <div class="feed-card--text">
+              <h4 class="feed-card--username">
+                <%= message.reader.username %>
+              </h4>
+              <span class="feed-card--update-message"><%= message.body %></span>
+              <span class="feed-card--book-name"><%= message.book.title %></span>         
+              <span class="feed-card--update-message">
+                <%= message.body.toString() === 'removed' ? "from their library"
+                :"" %></span
+              >
+              
+            <div class="feed-card---image-container">
+              <img class="feed-card--image" src="<%= message.book.image %> " />
             </div>
+            </div>
+          </div>
+             <!-- Add Comment card -->
+             <div class="comment-card">
+              <img
+                src="<%= currentUser.image.url %> "
+                alt=""
+                class="comment-card--image"
+              />
+              <h5 class="comment-card--username"><%= currentUser.username %></h5>
+              <form
+              action="/feed/<%= message._id %>/comment"
+              method="POST"
+              class="validated-form"
+              novalidate
+            >
+              <input
+              class="comment-card--comment-label"
+              placeholder="Comment Here..."
+              type="text"
+              id="comment"
+              name="comment"
+              aria-label="feed[Comment]"
+              required
+              autofocus
+            />
+              <button
+                type="submit"
+                class="comment-card--icon"
+                >
+                <i class="fas fa-comment ">X</i>
+  
+              </button>
+              </form>
+            </div>
+          <!-- Comment Cards -->
+          <% if(message.comments) {%> 
+            <!--  -->
+            <% message.comments.forEach(function(comment){ %>
+              <div class="comment-card comment">
+                <img
+                  src="<%= comment.author.image.url %> "
+                  alt=""
+                  class="comment-card--image"
+                />
+                <h5 class="comment-card--username"><%= comment.author.username %></h5>
+                <p class="comment-card--comment"><%= comment.body %> </p>
+                </div>
 
-            <% } )%>
+            <% }) %> 
+            <!--  -->     
+            <% } %> 
+       
+
+          <% } %>
+          <!--  -->
+          <% } )%>
+          <!--  -->
+          <% } )%>
         </div>
+
+        
+
+
+        <!-- Right container -->
+        <div class="main-feed--right-container">
+          <h3>Most read, right now</h3>
+          <img class="main-feed--right-image-container">
+            <img
+              class="main-feed--right-image-container"
+              src="/images/WOK.jpg"
+            />
+          </div>
+        </div>
+
+
       </div>
-    </div>
-    </div>
-    </div>
+    </main>
 
+    <!-- Bootstrap JS (including popper) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  </main>
+    <script src="/Scripts/search.js"></script>
 
-
-  <!-- Bootstrap JS (including popper) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-    crossorigin="anonymous"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <script src="/Scripts/search.js"></script>
-
-  <script src="/Scripts/validateForms.js"></script>
-</body>
-
+    <script src="/Scripts/validateForms.js"></script>
+    <script src="https://kit.fontawesome.com/c4924f19e5.js" crossorigin="anonymous"></script>
+  </body>
 </html>
